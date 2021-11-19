@@ -7,6 +7,7 @@ import { HeaderComponent } from './layout/header/header.component';
 import { MainComponent } from './layout/main/main.component';
 import { SearchInputComponent } from './components/search-input/search-input.component';
 import { InventoryTableComponent } from './components/inventory-table/inventory-table.component';
+import { InventoryTableHeaderDirective } from './components/inventory-table/inventory-table-header.directive';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { InventoryTableComponent } from './components/inventory-table/inventory-
     MainComponent,
     SearchInputComponent,
     InventoryTableComponent,
+    InventoryTableHeaderDirective,
   ],
   imports: [BrowserModule, HttpClientModule],
   providers: [],

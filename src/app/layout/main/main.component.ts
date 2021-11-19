@@ -7,6 +7,7 @@ import { InventoryDataService } from 'src/app/services/inventory-data.service';
   styleUrls: ['./main.component.css'],
 })
 export class MainComponent implements OnInit {
+  dataSource$ = this.inventoryDataService.getData();
   constructor(private inventoryDataService: InventoryDataService) {
     this.inventoryDataService.getData().subscribe((data) => {
       console.log(
