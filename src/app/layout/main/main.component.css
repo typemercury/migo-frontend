@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  width: 100%;
+  height: calc(100% - 64px);
+}
+
+.title {
+  /* Inventory Manager */
+  width: 342px;
+  height: 40px;
+  margin-top: 16px;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 30px;
+
+  /* or 187% */
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.15px;
+
+  /* Black / High Emphasis */
+  color: rgba(0, 0, 0, 0.87);
+}
