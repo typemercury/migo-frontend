@@ -8,6 +8,7 @@ import { MainComponent } from './layout/main/main.component';
 import { SearchInputComponent } from './components/search-input/search-input.component';
 import { InventoryTableComponent } from './components/inventory-table/inventory-table.component';
 import { InventoryTableHeaderDirective } from './components/inventory-table/inventory-table-header.directive';
+import { IconDirective } from './directives/icon.directive';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { InventoryTableHeaderDirective } from './components/inventory-table/inve
     SearchInputComponent,
     InventoryTableComponent,
     InventoryTableHeaderDirective,
+    IconDirective,
   ],
   imports: [BrowserModule, HttpClientModule],
   providers: [],

@@ -16,11 +16,14 @@ import { Inventory } from 'src/app/services/inventory-data';
       </tr>
       <!-- loop through titles -->
       <ng-container *ngFor="let data of dataSource">
-        <tr
-          (click)="toggleExpand(data.title_id)"
-          [style.background]="data.content_type === 'Series' ? 'yellow' : ''"
-        >
-          <td>{{ data.title_id }}</td>
+        <tr (click)="toggleExpand(data.title_id)">
+          <td class="flex">
+            <img
+              *ngIf="data.content_type === 'Series'"
+              [appIcon]="expandState[data.title_id] ? 'expand' : 'collapse'"
+            />
+            {{ data.title_id }}
+          </td>
           <td>{{ data.title_name }}</td>
           <td>{{ data.content_type }}</td>
           <td>{{ data.seasons?.length || '-' }}</td>
@@ -33,11 +36,14 @@ import { Inventory } from 'src/app/services/inventory-data';
         >
           <!-- loop through seasons -->
           <ng-container *ngFor="let season of data.seasons">
-            <tr
-              (click)="toggleExpand(season.season_id)"
-              style="background: red"
-            >
-              <td>{{ season.season_id }}</td>
+            <tr (click)="toggleExpand(season.season_id)">
+              <td class="flex">
+                <img
+                  [appIcon]="
+                    expandState[season.season_id] ? 'expand' : 'collapse'
+                  "
+                />{{ season.season_id }}
+              </td>
               <td>Season {{ season.season_number }}</td>
               <td>Season</td>
               <td>S{{ season.season_number }}</td>
@@ -47,10 +53,7 @@ import { Inventory } from 'src/app/services/inventory-data';
             </tr>
             <!-- loop through episodes -->
             <ng-container *ngIf="expandState[season.season_id]">
-              <tr
-                *ngFor="let episode of season.episodes"
-                style="background: blue"
-              >
+              <tr *ngFor="let episode of season.episodes">
                 <td>{{ episode.episode_id }}</td>
                 <td>{{ episode.episode_name }}</td>
                 <td>Episode</td>
