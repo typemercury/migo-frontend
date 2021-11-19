@@ -1,4 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Inventory } from 'src/app/services/inventory-data';
 
 @Component({
@@ -10,7 +16,10 @@ import { Inventory } from 'src/app/services/inventory-data';
       </tr>
       <!-- loop through titles -->
       <ng-container *ngFor="let data of dataSource">
-        <tr>
+        <tr
+          (click)="toggleExpand(data.title_id)"
+          [style.background]="data.content_type === 'Series' ? 'yellow' : ''"
+        >
           <td>{{ data.title_id }}</td>
           <td>{{ data.title_name }}</td>
           <td>{{ data.content_type }}</td>
@@ -19,10 +28,15 @@ import { Inventory } from 'src/app/services/inventory-data';
           <td>{{ data.publish_timestamp | date: 'MMM d, y' }}</td>
           <td></td>
         </tr>
-        <ng-container *ngIf="data.content_type === 'Series'">
+        <ng-container
+          *ngIf="data.content_type === 'Series' && expandState[data.title_id]"
+        >
           <!-- loop through seasons -->
           <ng-container *ngFor="let season of data.seasons">
-            <tr style="background: red">
+            <tr
+              (click)="toggleExpand(season.season_id)"
+              style="background: red"
+            >
               <td>{{ season.season_id }}</td>
               <td>Season {{ season.season_number }}</td>
               <td>Season</td>
@@ -32,18 +46,20 @@ import { Inventory } from 'src/app/services/inventory-data';
               <td></td>
             </tr>
             <!-- loop through episodes -->
-            <tr
-              *ngFor="let episode of season.episodes"
-              style="background: blue"
-            >
-              <td>{{ episode.episode_id }}</td>
-              <td>{{ episode.episode_name }}</td>
-              <td>Episode</td>
-              <td>-</td>
-              <td>{{ episode.episode_number }}</td>
-              <td>-</td>
-              <td></td>
-            </tr>
+            <ng-container *ngIf="expandState[season.season_id]">
+              <tr
+                *ngFor="let episode of season.episodes"
+                style="background: blue"
+              >
+                <td>{{ episode.episode_id }}</td>
+                <td>{{ episode.episode_name }}</td>
+                <td>Episode</td>
+                <td>-</td>
+                <td>{{ episode.episode_number }}</td>
+                <td>-</td>
+                <td></td>
+              </tr>
+            </ng-container>
           </ng-container>
         </ng-container>
       </ng-container>
@@ -51,7 +67,7 @@ import { Inventory } from 'src/app/services/inventory-data';
   `,
   styleUrls: ['./inventory-table.component.css'],
 })
-export class InventoryTableComponent implements OnInit {
+export class InventoryTableComponent implements OnInit, OnChanges {
   columns = [
     'ID',
     'Title Name',
@@ -63,7 +79,32 @@ export class InventoryTableComponent implements OnInit {
   ];
   @Input() dataSource: Inventory[] | null = [];
 
+  expandState: Record<number, boolean> = {};
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(
+      '%c 🍉 changes: ',
+      'font-size:20px;background-color: #6EC1C2;color:#fff;',
+      changes
+    );
+    const { dataSource } = changes;
+    if (dataSource.currentValue) {
+      (dataSource.currentValue as Inventory[]).forEach((data) => {
+        if (data.content_type === 'Series') {
+          this.expandState[data.title_id] = false;
+          data.seasons.forEach((season) => {
+            this.expandState[season.season_id] = false;
+          });
+        }
+      });
+    }
+  }
+
+  toggleExpand(id: number) {
+    this.expandState[id] = !this.expandState[id];
+  }
 }
