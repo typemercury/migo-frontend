@@ -9,6 +9,8 @@ import { SearchInputComponent } from './components/search-input/search-input.com
 import { InventoryTableComponent } from './components/inventory-table/inventory-table.component';
 import { InventoryTableHeaderDirective } from './components/inventory-table/inventory-table-header.directive';
 import { IconDirective } from './directives/icon.directive';
+import { ToggleSwitchComponent } from './components/toggle-switch/toggle-switch.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,8 +21,9 @@ import { IconDirective } from './directives/icon.directive';
     InventoryTableComponent,
     InventoryTableHeaderDirective,
     IconDirective,
+    ToggleSwitchComponent,
   ],
-  imports: [BrowserModule, HttpClientModule],
+  imports: [BrowserModule, HttpClientModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
