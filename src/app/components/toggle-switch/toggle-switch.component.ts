@@ -1,10 +1,14 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-toggle-switch',
   template: `
     <label class="switch">
-      <input [(ngModel)]="checked" type="checkbox" />
+      <input
+        [ngModel]="checked"
+        (ngModelChange)="onChange($event)"
+        type="checkbox"
+      />
       <span class="slider"></span>
     </label>
   `,
@@ -12,4 +16,9 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 })
 export class ToggleSwitchComponent {
   @Input() checked = false;
+  @Output() switch = new EventEmitter();
+  onChange(checked: boolean) {
+    this.checked = checked;
+    this.switch.emit(checked);
+  }
 }
