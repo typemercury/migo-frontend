@@ -14,7 +14,7 @@ import { Component, OnInit } from '@angular/core';
     `
       :host {
         display: block;
-        width: 1440px;
+        width: 100%;
         height: 64px;
         background-color: #e31e30;
         box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
