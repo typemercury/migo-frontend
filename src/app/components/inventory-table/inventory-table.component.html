@@ -29,7 +29,14 @@
         <td>{{ data.seasons?.length || '-' }}</td>
         <td>{{ data.episode_count }}</td>
         <td>{{ data.publish_timestamp | date: 'MMM d, y' }}</td>
-        <td><app-toggle-switch></app-toggle-switch></td>
+        <td>
+          <div class="flex items-center">
+            <app-toggle-switch class="mr-[16px]"></app-toggle-switch
+            ><span>{{
+              data.content_type === 'Series' ? 'All Seasons' : 'Single Movie'
+            }}</span>
+          </div>
+        </td>
       </tr>
       <ng-container
         *ngIf="data.content_type === 'Series' && expandState[data.title_id]"
@@ -59,7 +66,12 @@
             <td>S{{ season.season_number }}</td>
             <td>{{ season.episode_count }}</td>
             <td>{{ season.publish_timestamp | date: 'MMM d, y' }}</td>
-            <td></td>
+            <td>
+              <div class="flex items-center">
+                <app-toggle-switch class="mr-[16px]"></app-toggle-switch
+                ><span>All Episodes</span>
+              </div>
+            </td>
           </tr>
           <!-- loop through episodes -->
           <ng-container *ngIf="expandState[season.season_id]">
@@ -86,7 +98,12 @@
               <td>-</td>
               <td>EP{{ episode.episode_number }}</td>
               <td>-</td>
-              <td></td>
+              <td>
+                <div class="flex items-center">
+                  <app-toggle-switch class="mr-[16px]"></app-toggle-switch
+                  ><span>Per Episode</span>
+                </div>
+              </td>
             </tr>
           </ng-container>
         </ng-container>
