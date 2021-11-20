@@ -44,13 +44,14 @@
               [class.last]="seasonIndex === data.seasons.length - 1"
               colspan="2"
             >
-              <div class="flex pl-[50px]">
-                <div class="w-[32px]">
-                  <img
-                    [appIcon]="expandState[season.season_id] ? 'minus' : 'plus'"
-                  />
-                </div>
-                <span>{{ season.season_id }}</span>
+              <div class="flex pl-[50px] align-center">
+                <img
+                  [appIcon]="expandState[season.season_id] ? 'minus' : 'plus'"
+                  class="mr-[10px]"
+                />
+                <span class="inline-block w-[56px] mr-[8px]">{{
+                  season.season_id
+                }}</span>
                 <span>Season {{ season.season_number }}</span>
               </div>
             </td>
@@ -75,13 +76,15 @@
                   "
                 ></div>
                 <div class="flex pl-[88px]">
-                  <span>{{ episode.episode_id }}</span>
+                  <span class="inline-block w-[56px] mr-[8px]">{{
+                    episode.episode_id
+                  }}</span>
                   <span>{{ episode.episode_name }}</span>
                 </div>
               </td>
               <td>Episode</td>
               <td>-</td>
-              <td>{{ episode.episode_number }}</td>
+              <td>EP{{ episode.episode_number }}</td>
               <td>-</td>
               <td></td>
             </tr>
