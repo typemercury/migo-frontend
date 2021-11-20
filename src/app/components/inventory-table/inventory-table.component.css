@@ -28,6 +28,15 @@ th {
   color: #292928;
 }
 
+tr {
+  cursor: pointer;
+}
+
+tr:hover {
+  /* background-color: #4ea0dd; */
+  background-color: rgba(78, 160, 221, 0.1);
+}
+
 tr > th:first-child {
   padding-left: 32px;
 }
