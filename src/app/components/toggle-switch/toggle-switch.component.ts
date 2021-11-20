@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 
 @Component({
   selector: 'app-toggle-switch',
@@ -14,11 +21,23 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   `,
   styleUrls: ['./toggle-switch.component.css'],
 })
-export class ToggleSwitchComponent {
+export class ToggleSwitchComponent implements OnChanges {
   @Input() checked = false;
   @Output() switch = new EventEmitter();
   onChange(checked: boolean) {
+    console.log(
+      '%c 🍏 onChange: ',
+      'font-size:20px;background-color: #33A5FF;color:#fff;',
+      checked
+    );
     this.checked = checked;
     this.switch.emit(checked);
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(
+      '%c 🥒 e: ',
+      'font-size:20px;background-color: #3F7CFF;color:#fff;',
+      changes
+    );
   }
 }
