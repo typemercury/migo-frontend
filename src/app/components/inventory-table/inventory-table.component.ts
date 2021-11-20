@@ -27,7 +27,7 @@ export class InventoryTableComponent implements OnInit, OnChanges {
   expandState: Record<number, boolean> = {};
   programmableState: Record<
     number,
-    { parentId?: number; programmable: boolean }
+    { programmable: boolean; parentId?: number; childrenIds?: number[] }
   > = {};
 
   constructor() {}
@@ -44,16 +44,24 @@ export class InventoryTableComponent implements OnInit, OnChanges {
             this.expandState[season.season_id] = false;
           });
         }
-        this.programmableState[data.title_id] = { programmable: false };
+        this.programmableState[data.title_id] = {
+          programmable: false,
+          childrenIds: [],
+        };
         data.seasons.forEach((season) => {
-          this.programmableState[season.season_id] = {
-            parentId: data.title_id,
+          const seasonId = season.season_id;
+          this.programmableState[data.title_id].childrenIds?.push(seasonId);
+          this.programmableState[seasonId] = {
             programmable: false,
+            parentId: data.title_id,
+            childrenIds: [],
           };
           season.episodes.forEach((episode) => {
-            this.programmableState[episode.episode_id] = {
-              parentId: season.season_id,
+            const episodeId = episode.episode_id;
+            this.programmableState[seasonId].childrenIds?.push(episodeId);
+            this.programmableState[episodeId] = {
               programmable: false,
+              parentId: seasonId,
             };
           });
         });
@@ -68,36 +76,57 @@ export class InventoryTableComponent implements OnInit, OnChanges {
   }
 
   onTitleSwitch(programmable: boolean, id: number) {
-    console.log(
-      '%c 🍰 onTitleSwitch: ',
-      'font-size:20px;background-color: #F5CE50;color:#fff;',
-      programmable
-    );
-    this.programmableState[id].programmable = programmable;
+    const state = this.programmableState[id];
+    state.programmable = programmable;
+    // turn on seasons and episodes
+    if (programmable) {
+      state.childrenIds?.forEach((seasonId) => {
+        this.turnOnSwitch(seasonId, { andChildren: true });
+      });
+    }
   }
 
   onSeasonSwitch(programmable: boolean, id: number) {
-    console.log(
-      '%c 🥚 onSeasonSwitch: ',
-      'font-size:20px;background-color: #FCA650;color:#fff;',
-      programmable
-    );
-    this.programmableState[id].programmable = programmable;
+    const state = this.programmableState[id];
+    state.programmable = programmable;
+    // turn on parent title and episodes
     if (programmable) {
-      this.onTitleSwitch(true, this.programmableState[id].parentId!);
+      this.turnOnSwitch(state.parentId!);
+      state.childrenIds?.forEach((childId) => {
+        this.turnOnSwitch(childId);
+      });
     }
   }
 
   onEpisodeSwitch(programmable: boolean, id: number) {
-    console.log(
-      '%c 🍒 onEpisodeSwitch: ',
-      'font-size:20px;background-color: #4b4b4b;color:#fff;',
-      programmable
-    );
-    this.programmableState[id].programmable = programmable;
-    // turn on season
+    const state = this.programmableState[id];
+    state.programmable = programmable;
+    // turn on parent
     if (programmable) {
-      this.onSeasonSwitch(true, this.programmableState[id].parentId!);
+      this.turnOnSwitch(state.parentId!, { andParent: true });
+    }
+  }
+
+  private turnOnSwitch(
+    id: number,
+    options?: { andChildren?: boolean; andParent?: boolean }
+  ) {
+    if (!id || !this.programmableState[id]) {
+      return;
+    }
+    const state = this.programmableState[id];
+    state.programmable = true;
+    if (options?.andParent === true && state.parentId) {
+      this.turnOnSwitch(state.parentId, options);
+    }
+    if (
+      options?.andChildren === true &&
+      state.childrenIds &&
+      state.childrenIds.length > 0
+    ) {
+      state.childrenIds.forEach((childId) => {
+        this.turnOnSwitch(childId, options);
+      });
     }
   }
 }
