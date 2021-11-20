@@ -4,7 +4,10 @@
 </div> -->
 <div class="w-full h-full px-[24px]">
   <h1 class="title">Inventory Manager</h1>
-  <app-search-input class="w-[419px] h-[40px] mt-4"></app-search-input>
+  <app-search-input
+    class="w-[419px] h-[40px] mt-4"
+    (input)="filter$.next($event)"
+  ></app-search-input>
   <app-inventory-table
     class="w-full mt-4"
     [dataSource]="dataSource$ | async"

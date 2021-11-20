@@ -2,9 +2,17 @@
   display: block;
 }
 
-input {
+div {
   background: rgba(32, 32, 32, 0.05);
   border: 1px solid #b2b2b2;
-  box-sizing: border-box;
   border-radius: 4px;
+}
+
+input {
+  border: none;
+  background: transparent;
+}
+
+input:focus {
+  outline: none;
 }

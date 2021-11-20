@@ -5,7 +5,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { Inventory, Season } from 'src/app/services/inventory-data';
+import { Episode, Inventory, Season } from 'src/app/services/inventory-data';
 
 @Component({
   selector: 'app-inventory-table',
@@ -23,6 +23,7 @@ export class InventoryTableComponent implements OnInit, OnChanges {
     'Programmable',
   ];
   @Input() dataSource: Inventory[] | null = [];
+  @Input() filter: string | null = null;
 
   expandState: Record<number, boolean> = {};
   programmableState: Record<
@@ -30,13 +31,17 @@ export class InventoryTableComponent implements OnInit, OnChanges {
     { programmable: boolean; parentId?: number; childrenIds?: number[] }
   > = {};
 
+  trackByTitleId = (_: number, item: Inventory) => item.title_id;
+  trackBySId = (_: number, item: Season) => item.season_id;
+  trackByEPId = (_: number, item: Episode) => item.episode_id;
+
   constructor() {}
 
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges) {
     const { dataSource } = changes;
-    if (dataSource.currentValue) {
+    if (dataSource.previousValue === null && dataSource.currentValue) {
       (dataSource.currentValue as Inventory[]).forEach((data) => {
         if (data.content_type === 'Series') {
           this.expandState[data.title_id] = false;

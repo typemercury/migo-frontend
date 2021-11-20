@@ -8,14 +8,14 @@
   </thead>
   <tbody>
     <!-- loop through titles -->
-    <ng-container *ngFor="let data of dataSource">
+    <ng-container *ngFor="let data of dataSource; trackBy: trackByTitleId">
       <tr class="title" (click)="toggleExpand(data.title_id)">
         <td
-          class="text-[#494948] relative"
+          class="text-[#494948] w-[96px] relative"
           [class.expand]="expandState[data.title_id]"
         >
-          <div class="flex pl-[11px]">
-            <div class="w-[32px]">
+          <div class="flex">
+            <div class="w-[32px] pl-[11px]">
               <img
                 *ngIf="data.content_type === 'Series'"
                 [appIcon]="expandState[data.title_id] ? 'expand' : 'collapse'"
@@ -45,7 +45,11 @@
       >
         <!-- loop through seasons -->
         <ng-container
-          *ngFor="let season of data.seasons; let seasonIndex = index"
+          *ngFor="
+            let season of data.seasons;
+            let seasonIndex = index;
+            trackBy: trackBySId
+          "
         >
           <tr class="season" (click)="toggleExpand(season.season_id)">
             <td
@@ -83,7 +87,11 @@
           <ng-container *ngIf="expandState[season.season_id]">
             <tr
               class="episode"
-              *ngFor="let episode of season.episodes; let episodeIndex = index"
+              *ngFor="
+                let episode of season.episodes;
+                let episodeIndex = index;
+                trackBy: trackByEPId
+              "
             >
               <td class="text-[#494948] relative expand" colspan="2">
                 <div
