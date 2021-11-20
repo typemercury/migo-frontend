@@ -36,9 +36,7 @@
               [checked]="programmableState[data.title_id].programmable"
               (switch)="onTitleSwitch($event, data.title_id)"
             ></app-toggle-switch
-            ><span>{{
-              data.content_type === 'Series' ? 'All Seasons' : 'Single Movie'
-            }}</span>
+            ><span>{{ getProgrammableText(data) }}</span>
           </div>
         </td>
       </tr>
@@ -77,7 +75,7 @@
                   [checked]="programmableState[season.season_id].programmable"
                   (switch)="onSeasonSwitch($event, season.season_id)"
                 ></app-toggle-switch
-                ><span>All Episodes</span>
+                ><span>{{ getProgrammableText(season) }}</span>
               </div>
             </td>
           </tr>

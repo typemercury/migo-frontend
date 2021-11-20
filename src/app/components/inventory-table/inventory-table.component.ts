@@ -5,7 +5,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { Inventory } from 'src/app/services/inventory-data';
+import { Inventory, Season } from 'src/app/services/inventory-data';
 
 @Component({
   selector: 'app-inventory-table',
@@ -73,6 +73,24 @@ export class InventoryTableComponent implements OnInit, OnChanges {
     if (this.expandState[id] !== undefined) {
       this.expandState[id] = !this.expandState[id];
     }
+  }
+
+  getProgrammableText(data: Inventory | Season) {
+    if ('seasons' in data) {
+      if (data.content_type === 'Movie') {
+        return 'Single Movie';
+      }
+      const seasonIds = data.seasons.map((s) => s.season_id);
+      if (seasonIds.every((id) => this.programmableState[id].programmable)) {
+        return 'All Seasons';
+      }
+    } else if ('episodes' in data) {
+      const episodeIds = data.episodes.map((s) => s.episode_id);
+      if (episodeIds.every((id) => this.programmableState[id].programmable)) {
+        return 'All Episodes';
+      }
+    }
+    return '';
   }
 
   onTitleSwitch(programmable: boolean, id: number) {
