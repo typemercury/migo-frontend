@@ -50,6 +50,8 @@ export class InventoryTableComponent implements OnInit, OnChanges {
   }
 
   toggleExpand(id: number) {
-    this.expandState[id] = !this.expandState[id];
+    if (this.expandState[id] !== undefined) {
+      this.expandState[id] = !this.expandState[id];
+    }
   }
 }

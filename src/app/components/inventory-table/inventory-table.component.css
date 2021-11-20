@@ -61,10 +61,77 @@ td {
   color: #000000;
 }
 
-td.id {
-  color: #494948;
+tr.title > .expand::before {
+  position: absolute;
+  content: '';
+  top: 29px;
+  left: 16px;
+  height: 18px;
+  border: 1px solid #c3c3c2;
 }
 
-td.title {
-  font-weight: 500;
+tr.season > .expand::before {
+  position: absolute;
+  content: '';
+  top: 0px;
+  left: 16px;
+  height: 100%;
+  border: 1px solid #c3c3c2;
+}
+
+tr.season > .expand.last::before {
+  height: 50%;
+}
+
+tr.season > .expand::after {
+  position: absolute;
+  content: '';
+  top: calc(50% - 1px);
+  left: 16px;
+  width: 25px;
+  border: 1px solid #c3c3c2;
+}
+
+tr.episode > .expand::after {
+  position: absolute;
+  content: '';
+  top: calc(50% - 1px);
+  left: 58px;
+  width: 25px;
+  border: 1px solid #c3c3c2;
+}
+
+.expand-line {
+  position: absolute;
+  top: 0px;
+  left: 16px;
+  height: 100%;
+  width: 43px;
+}
+
+.expand-line::before {
+  position: absolute;
+  content: '';
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  border: 1px solid #c3c3c2;
+}
+
+.expand-line::after {
+  position: absolute;
+  content: '';
+  top: 0px;
+  left: 42px;
+  height: 100%;
+  border: 1px solid #c3c3c2;
+}
+
+.expand-line.last-season::before {
+  border-style: none;
+  height: 0px;
+}
+
+.expand-line.last-episode::after {
+  height: 50%;
 }

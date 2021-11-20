@@ -9,9 +9,12 @@
   <tbody>
     <!-- loop through titles -->
     <ng-container *ngFor="let data of dataSource">
-      <tr (click)="toggleExpand(data.title_id)">
-        <td class="id">
-          <div class="flex">
+      <tr class="title" (click)="toggleExpand(data.title_id)">
+        <td
+          class="text-[#494948] relative"
+          [class.expand]="expandState[data.title_id]"
+        >
+          <div class="flex pl-[11px]">
             <div class="w-[32px]">
               <img
                 *ngIf="data.content_type === 'Series'"
@@ -21,7 +24,7 @@
             {{ data.title_id }}
           </div>
         </td>
-        <td class="title">{{ data.title_name }}</td>
+        <td class="font-medium">{{ data.title_name }}</td>
         <td>{{ data.content_type }}</td>
         <td>{{ data.seasons?.length || '-' }}</td>
         <td>{{ data.episode_count }}</td>
@@ -32,16 +35,25 @@
         *ngIf="data.content_type === 'Series' && expandState[data.title_id]"
       >
         <!-- loop through seasons -->
-        <ng-container *ngFor="let season of data.seasons">
-          <tr (click)="toggleExpand(season.season_id)">
-            <td class="flex id">
-              <img
-                [appIcon]="
-                  expandState[season.season_id] ? 'expand' : 'collapse'
-                "
-              />{{ season.season_id }}
+        <ng-container
+          *ngFor="let season of data.seasons; let seasonIndex = index"
+        >
+          <tr class="season" (click)="toggleExpand(season.season_id)">
+            <td
+              class="text-[#494948] relative expand"
+              [class.last]="seasonIndex === data.seasons.length - 1"
+              colspan="2"
+            >
+              <div class="flex pl-[50px]">
+                <div class="w-[32px]">
+                  <img
+                    [appIcon]="expandState[season.season_id] ? 'minus' : 'plus'"
+                  />
+                </div>
+                <span>{{ season.season_id }}</span>
+                <span>Season {{ season.season_number }}</span>
+              </div>
             </td>
-            <td>Season {{ season.season_number }}</td>
             <td>Season</td>
             <td>S{{ season.season_number }}</td>
             <td>{{ season.episode_count }}</td>
@@ -50,9 +62,23 @@
           </tr>
           <!-- loop through episodes -->
           <ng-container *ngIf="expandState[season.season_id]">
-            <tr *ngFor="let episode of season.episodes">
-              <td class="id">{{ episode.episode_id }}</td>
-              <td>{{ episode.episode_name }}</td>
+            <tr
+              class="episode"
+              *ngFor="let episode of season.episodes; let episodeIndex = index"
+            >
+              <td class="text-[#494948] relative expand" colspan="2">
+                <div
+                  class="expand-line"
+                  [class.last-season]="seasonIndex === data.seasons.length - 1"
+                  [class.last-episode]="
+                    episodeIndex === season.episodes.length - 1
+                  "
+                ></div>
+                <div class="flex pl-[88px]">
+                  <span>{{ episode.episode_id }}</span>
+                  <span>{{ episode.episode_name }}</span>
+                </div>
+              </td>
               <td>Episode</td>
               <td>-</td>
               <td>{{ episode.episode_number }}</td>
