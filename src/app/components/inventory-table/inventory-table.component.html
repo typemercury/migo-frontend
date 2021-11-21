@@ -1,9 +1,13 @@
 <table class="w-full">
   <thead>
     <tr>
-      <th *ngFor="let col of columns">
-        <div>{{ col }}</div>
-      </th>
+      <th class="text-left w-[96px]">ID</th>
+      <th class="text-left w-[432px]">Title Name</th>
+      <th class="text-left w-[88px]">Type</th>
+      <th class="text-left w-[64px]">Season</th>
+      <th class="text-left w-[72px]">Episode</th>
+      <th class="text-left">Published</th>
+      <th class="text-left w-[144px]">Programmable</th>
     </tr>
   </thead>
   <tbody>
@@ -24,12 +28,12 @@
             {{ data.title_id }}
           </div>
         </td>
-        <td class="font-medium">{{ data.title_name }}</td>
-        <td>{{ data.content_type }}</td>
-        <td>{{ data.seasons?.length || '-' }}</td>
-        <td>{{ data.episode_count }}</td>
+        <td class="!font-medium w-[432px]">{{ data.title_name }}</td>
+        <td class="w-[88px]">{{ data.content_type }}</td>
+        <td class="w-[64px]">{{ data.seasons?.length || '-' }}</td>
+        <td class="w-[72px]">{{ data.episode_count }}</td>
         <td>{{ data.publish_timestamp | date: 'MMM d, y' }}</td>
-        <td>
+        <td class="w-[144px]">
           <div class="flex items-center">
             <app-toggle-switch
               class="mr-[16px]"
@@ -57,7 +61,7 @@
             [@seasonAnimation]
           >
             <td
-              class="text-[#494948] relative expand"
+              class="text-[#494948] relative expand w-[528px]"
               [class.last]="seasonIndex === data.seasons.length - 1"
               colspan="2"
             >
@@ -72,11 +76,11 @@
                 <span>Season {{ season.season_number }}</span>
               </div>
             </td>
-            <td>Season</td>
-            <td>S{{ season.season_number }}</td>
-            <td>{{ season.episode_count }}</td>
+            <td class="w-[88px]">Season</td>
+            <td class="w-[64px]">S{{ season.season_number }}</td>
+            <td class="w-[72px]">{{ season.episode_count }}</td>
             <td>{{ season.publish_timestamp | date: 'MMM d, y' }}</td>
-            <td>
+            <td class="w-[144px]">
               <div class="flex items-center">
                 <app-toggle-switch
                   class="mr-[16px]"
@@ -98,7 +102,7 @@
               "
               [@episodeAnimation]
             >
-              <td class="text-[#494948] relative expand" colspan="2">
+              <td class="text-[#494948] relative expand w-[528px]" colspan="2">
                 <div
                   class="expand-line"
                   [class.last-season]="seasonIndex === data.seasons.length - 1"
@@ -113,11 +117,11 @@
                   <span>{{ episode.episode_name }}</span>
                 </div>
               </td>
-              <td>Episode</td>
+              <td class="w-[88px]">Episode</td>
+              <td class="w-[64px]">-</td>
+              <td class="w-[72px]">EP{{ episode.episode_number }}</td>
               <td>-</td>
-              <td>EP{{ episode.episode_number }}</td>
-              <td>-</td>
-              <td>
+              <td class="w-[144px]">
                 <div class="flex items-center">
                   <app-toggle-switch
                     class="mr-[16px]"
