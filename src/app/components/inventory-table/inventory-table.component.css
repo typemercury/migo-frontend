@@ -16,6 +16,11 @@ thead {
   background-color: rgba(32, 32, 32, 0.05);
 }
 
+thead > th {
+  position: sticky;
+  top: 50px;
+}
+
 th {
   font-weight: 500;
   font-size: 12px;
@@ -26,6 +31,19 @@ th {
 
   /* GREY 800 */
   color: #292928;
+}
+
+tbody {
+  display: block;
+  height: 731px;
+  overflow: auto;
+}
+
+thead,
+tbody > tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* even columns width , fix width of table too*/
 }
 
 tr {
