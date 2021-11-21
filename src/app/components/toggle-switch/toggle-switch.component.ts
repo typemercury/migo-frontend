@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-toggle-switch',
@@ -17,6 +23,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class ToggleSwitchComponent {
   @Input() checked = false;
   @Output() switch = new EventEmitter();
+  @HostListener('click', ['$event']) onClick(e: Event) {
+    e.stopPropagation();
+  }
   onChange(checked: boolean) {
     this.checked = checked;
     this.switch.emit(checked);
