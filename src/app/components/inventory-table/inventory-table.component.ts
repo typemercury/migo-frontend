@@ -1,4 +1,12 @@
 import {
+  animate,
+  animation,
+  style,
+  transition,
+  trigger,
+  useAnimation,
+} from '@angular/animations';
+import {
   Component,
   Input,
   OnChanges,
@@ -7,10 +15,29 @@ import {
 } from '@angular/core';
 import { Episode, Inventory, Season } from 'src/app/services/inventory-data';
 
+const expandAnimation = animation([
+  style({ transform: 'translateY(100%)', opacity: 0 }),
+  animate('100ms', style({ transform: 'translateY(0)', opacity: 1 })),
+]);
+const collapseAnimation = animation([
+  style({ transform: 'translateY(0)', opacity: 1 }),
+  animate('100ms', style({ transform: 'translateY(100%)', opacity: 0 })),
+]);
+
 @Component({
   selector: 'app-inventory-table',
   templateUrl: './inventory-table.component.html',
   styleUrls: ['./inventory-table.component.css'],
+  animations: [
+    trigger('seasonAnimation', [
+      transition(':enter', [useAnimation(expandAnimation)]),
+      transition(':leave', [useAnimation(collapseAnimation)]),
+    ]),
+    trigger('episodeAnimation', [
+      transition(':enter', [useAnimation(expandAnimation)]),
+      transition(':leave', [useAnimation(collapseAnimation)]),
+    ]),
+  ],
 })
 export class InventoryTableComponent implements OnInit, OnChanges {
   columns = [

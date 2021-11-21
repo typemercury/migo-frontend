@@ -51,7 +51,11 @@
             trackBy: trackBySId
           "
         >
-          <tr class="season" (click)="toggleExpand(season.season_id)">
+          <tr
+            class="season"
+            (click)="toggleExpand(season.season_id)"
+            [@seasonAnimation]
+          >
             <td
               class="text-[#494948] relative expand"
               [class.last]="seasonIndex === data.seasons.length - 1"
@@ -92,6 +96,7 @@
                 let episodeIndex = index;
                 trackBy: trackByEPId
               "
+              [@episodeAnimation]
             >
               <td class="text-[#494948] relative expand" colspan="2">
                 <div

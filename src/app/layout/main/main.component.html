@@ -4,9 +4,9 @@
     class="w-[419px] h-[40px] mt-[16px]"
     (input)="filter$.next($event)"
   ></app-search-input>
-  <div class="h-[calc(100%-112px)] overflow-scroll">
+  <div class="h-[calc(100%-112px)] overflow-scroll mt-[16px]">
     <app-inventory-table
-      class="w-full mt-4 mb-6"
+      class="w-full"
       [dataSource]="dataSource$ | async"
     ></app-inventory-table>
   </div>

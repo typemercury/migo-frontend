@@ -11,6 +11,7 @@ import { InventoryTableHeaderDirective } from './components/inventory-table/inve
 import { IconDirective } from './directives/icon.directive';
 import { ToggleSwitchComponent } from './components/toggle-switch/toggle-switch.component';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,12 @@ import { FormsModule } from '@angular/forms';
     IconDirective,
     ToggleSwitchComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, FormsModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
