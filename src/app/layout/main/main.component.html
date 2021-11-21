@@ -1,15 +1,13 @@
-<!-- <div class="w-full h-full px-[24px]">
-  <h1 class="title">Inventory Manager</h1>
-  <app-search-input class="search"></app-search-input>
-</div> -->
 <div class="w-full h-full px-[24px]">
   <h1 class="title">Inventory Manager</h1>
   <app-search-input
-    class="w-[419px] h-[40px] mt-4"
+    class="w-[419px] h-[40px] mt-[16px]"
     (input)="filter$.next($event)"
   ></app-search-input>
-  <app-inventory-table
-    class="w-full mt-4"
-    [dataSource]="dataSource$ | async"
-  ></app-inventory-table>
+  <div class="h-[calc(100%-112px-24px)] overflow-hidden">
+    <app-inventory-table
+      class="w-full mt-4"
+      [dataSource]="dataSource$ | async"
+    ></app-inventory-table>
+  </div>
 </div>

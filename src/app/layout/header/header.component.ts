@@ -14,6 +14,9 @@ import { Component, OnInit } from '@angular/core';
     `
       :host {
         display: block;
+        position: fixed;
+        top: 0px;
+        z-index: 99;
         width: 100%;
         height: 64px;
         background-color: #e31e30;
